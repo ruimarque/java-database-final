@@ -16,11 +16,13 @@ public class Customer {
     private Long id;
 
     @Valid
-    @NotNull(message = "Name cannot be empty")
+    @NotNull(message = "Name cannot be null")
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
     // @Email ?
-    @NotNull(message = "Email cannot be empty")
+    @NotNull(message = "Email cannot be null")
+    @NotBlank(message = "Email cannot be blank")
     @Pattern(
         regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
         message = "Invalid email format"
@@ -28,6 +30,7 @@ public class Customer {
     private String email;
 
     @NotNull(message = "Phone cannot be null")
+    @NotBlank(message = "Phone cannot be blank")
     @Pattern(
         regexp = "^(\\+\\d{1,3}[- ]?)?\\d{7,15}$",
         message = "Invalid phone number format"

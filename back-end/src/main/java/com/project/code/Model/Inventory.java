@@ -22,7 +22,7 @@ public class Inventory {
     @JsonBackReference("inventory-store")
     private Store store;
 
-    @NotNull(message = "Stock level be empty")
+    @NotNull(message = "Stock leve cannot be null")
     @Min(value = 0, message = "Stock level can't be negative")
     private Integer stockLevel;
 

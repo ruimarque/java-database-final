@@ -14,20 +14,23 @@ public class Product {
     private Long id;
 
     @Valid
-    @NotNull(message = "Name cannot be empty")
+    @NotNull(message = "Name cannot be null")
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
-    @NotNull(message = "Category cannot be empty")
+    @NotNull(message = "Category cannot be null")
+    @NotBlank(message = "Category cannot be blank")
     private String category;
 
-    @NotNull(message = "Price cannot be empty")
+    @NotNull(message = "Price cannot be null")
     @Min(value = 0.01, message = "Price has to be greater than 0")
     private Double price;
 
-    @NotNull(message = "Sku cannot be empty")
+    @NotNull(message = "Sku cannot be null")
+    @NotBlank(message = "Sku cannot be blank")
     private String sku;
 
-    @OneToMany(mappedBy = "product", fetch = fetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonManagedReference("inventory-product")
     private List<Iventory> iventory;
 
