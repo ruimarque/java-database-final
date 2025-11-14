@@ -37,7 +37,7 @@ public class InventoryController {
     public Map<String, String> updateInventory(@RequestBody CombinedRequest request) {
         Product product = request.getProduct();
         Inventory inventory = request.getInventory();
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         // Check if product id already exists
         if(!serviceClass.ValidateProductId(product.getId())) {
             map.put("message", "Product doesn't exist in the database");
@@ -71,7 +71,7 @@ public class InventoryController {
 
     @PostMapping
     public Map<String, String> saveInventory(@RequestBody Inventory inventory) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         try {
             if(serviceClass.validateInventory(inventory)) {
                 // inventory entry does not exist
@@ -94,7 +94,7 @@ public class InventoryController {
 
     @GetMapping("/{storeId}")
     public Map<String, Object> getAllProducts(@PathVariable long storeId) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         List<Product> products = productRepository.findProductsByStoreId(storeId);
         map.put("products", products);
         return map;
@@ -102,7 +102,7 @@ public class InventoryController {
 
     @GetMapping("filter/{category}/{name}/{storeid}")
     public Map<String, Object> getProductName(@PathVariable String category, @PathVariable String name, @PathVariable long storeid) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         List<Product> products;
         if(category.equals("null")) {
             // filter by name in store with storeId
@@ -123,7 +123,7 @@ public class InventoryController {
 
     @GetMapping("search/{name}/{storeid}")
     public Map<String, Object> searchProduct(@PathVariable String name, @PathVariable long storeid) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         List<Product> products = productRepository.findByNameLike(storeid, name);
         map.put("product", products);
         return map;
@@ -131,7 +131,7 @@ public class InventoryController {
 
     @DeleteMapping("/{id}")
     public Map<String, String> removeProduct(@PathVariable long id) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         if(!serviceClass.ValidateProductId(id)) {
             map.put("message", "Product with that ID not present in database");
             return map;
