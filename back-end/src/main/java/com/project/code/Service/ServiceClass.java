@@ -17,8 +17,8 @@ public class ServiceClass {
     @AutoWired
     private StoreRepository storeRepository;
 
-    public boolean validateInventory(Iventory iventory){
-        Inventory result = inventoryRepository.findByProductIdandStoreId(iventory.getProduct().getId(), iventory.getStore().getId());
+    public boolean validateInventory(Inventory inventory){
+        Inventory result = inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
         if(result == null) {
             return true;
         }
@@ -48,8 +48,8 @@ public class ServiceClass {
         }
     }
 
-    public Iventory getIventoryId(Iventory iventory) {
-        Inventory result = inventoryRepository.findByProductIdandStoreId(iventory.getProduct().getId(), iventory.getStore().getId());
+    public Inventory getInventoryId(Inventory inventory) {
+        Inventory result = inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
         return result;
     }
 }

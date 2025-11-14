@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/iventory")
+@RequestMapping("/inventory")
 public class InventoryController {
 
     @AutoWired
@@ -26,9 +26,9 @@ public class InventoryController {
     ServiceClass serviceClass;
 
     @PutMapping
-    public Map<String, String> updateIventory(@RequestBody CombinedRequest request) {
+    public Map<String, String> updateInventory(@RequestBody CombinedRequest request) {
         Product product = request.getProduct();
-        Iventory iventory = request.getInventory();
+        Inventory inventory = request.getInventory();
         Map<String, String> map = new HashMap<String, String>();
         // Check if product id already exists
         if(!serviceClass.ValidateProductId(product.getId())) {
@@ -38,13 +38,13 @@ public class InventoryController {
         productRepository.save(product);
         map.put("message", "Updated product");
 
-        if(iventory != null) {
+        if(inventory != null) {
             try {
-                Iventory checkIventory = serviceClass.getInventoryId(iventory);
-                // iventory exists for that product and is going to be updated
-                if(checkIventory != null) {
-                    iventory.setId(checkIventory.getId();
-                    inventoryRepository.save(iventory);
+                Inventory checkInventory = serviceClass.getInventoryId(inventory);
+                // inventory exists for that product and is going to be updated
+                if(checkInventory != null) {
+                    inventory.setId(checkInventory.getId());
+                    inventoryRepository.save(inventory);
                 }
                 else {
                     map.put(message, "No data available");
@@ -62,15 +62,15 @@ public class InventoryController {
     }
 
     @PostMapping
-    public Map<String, String> saveIventory(@RequestBody Iventory iventory) {
+    public Map<String, String> saveInventory(@RequestBody Inventory inventory) {
         Map<String, String> map = new HashMap<String, String>();
         try {
-            if(serviceClass.validateInventory(iventory)) {
-                // iventory entry does not exist
-                inventoryRepository.save(iventory);
+            if(serviceClass.validateInventory(inventory)) {
+                // inventory entry does not exist
+                inventoryRepository.save(inventory);
             }
             else {
-                map.put(message, "Iventory entry already exists");
+                map.put(message, "Inventory entry already exists");
                 return map;
             }   
         } catch (DataIntegrityViolationException dive) {
@@ -80,7 +80,7 @@ public class InventoryController {
             map.put(message, "Error: " + e);
             return map;
         }  
-        map.put(message, "Iventory entry was added successfully");
+        map.put(message, "Inventory entry was added successfully");
         return map;    
     }
 

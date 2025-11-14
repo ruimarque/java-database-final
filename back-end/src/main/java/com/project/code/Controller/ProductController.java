@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{name}/{category}")
-    public Map<String, Object> filterByCategoryProduct(@PathVariable String name, @PathVariable, String category) {
+    public Map<String, Object> filterByCategoryProduct(@PathVariable String name, @PathVariable String category) {
 
     }
 
@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @GetMapping("filter/{category}/{storeid}")
-    public Map<String, Object> getProductByCategoryAndStoreId(@PathVariable String category, @PathVariable, String storeid) {
+    public Map<String, Object> getProductByCategoryAndStoreId(@PathVariable String category, @PathVariable String storeid) {
 
     }
 
@@ -61,7 +61,7 @@ public class ProductController {
     }
 
     @GetMapping("/searchProduct/{name}")
-    public Map<String, Object> searchProduct(@PathVariable String name  {
+    public Map<String, Object> searchProduct(@PathVariable String name) {
         
     }
 

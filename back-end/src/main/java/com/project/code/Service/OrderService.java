@@ -58,7 +58,7 @@ public class OrderService {
         // if it breaks compile replace this
         Store existingStore = storeRepository.findById(placeOrderRequest.getStoreId());
         if(existingStore == null) {
-            throw new RuntimeException("Store not found"));
+            throw new RuntimeException("Store not found");
         }
         // with this
         // Store existingStore = storeRepository.findById(placeOrderRequest.getStoreId()).orElseThrow(() -> new RuntimeException("Store not found"));
@@ -72,12 +72,12 @@ public class OrderService {
         for(PurchaseProductDTO purchasedProduct : purchasedItems) {
             // create the orderItem to save in the orderItemRepository
             OrderItem orderItem = new OrderItem();
-            // find the iventory entry from the store and product id
-            Iventory iventory = inventoryRepository.findByProductIdandStoreId(purchasedProduct.getId(), placeOrderRequest.getStoreId());            
+            // find the inventory entry from the store and product id
+            Inventory inventory = inventoryRepository.findByProductIdandStoreId(purchasedProduct.getId(), placeOrderRequest.getStoreId());            
             // update its stock level
-            iventory.setStockLevel(iventory.getStockLevel()-purchasedProduct.getQuantity());
+            inventory.setStockLevel(inventory.getStockLevel()-purchasedProduct.getQuantity());
             // rewrite in database
-            inventoryRepository.save(iventory);
+            inventoryRepository.save(inventory);
             // link the order item with order details
             orderItem.setOrder(newOrder);
             // find the product in the database using the id, and set that Product object as the order item product

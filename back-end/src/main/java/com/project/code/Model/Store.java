@@ -24,8 +24,8 @@ public class Store {
     private String address;
 
     @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
-    @JsonManagedReference("iventory-store")
-    private List<Iventory> iventory;
+    @JsonManagedReference("inventory-store")
+    private List<Inventory> inventory;
 
     public void setId(Long id) {
         this.id = id;
@@ -48,11 +48,11 @@ public class Store {
         return address;
     }
 
-    public void setIventory(List<Iventory> iventory) {
-        this.iventory = iventory;
+    public void setInventory(List<Inventory> inventory) {
+        this.inventory = inventory;
     }
-    public List<Iventory> getIventory() {
-        return iventory;
+    public List<Inventory> getInventory() {
+        return inventory;
     }
 
     public Store() {}

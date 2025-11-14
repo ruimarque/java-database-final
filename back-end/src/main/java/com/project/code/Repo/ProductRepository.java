@@ -18,15 +18,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findBySku(String sku);
     Product findByName(String name);
     Product findById(Long id);
-    @Query("SELECT i.product FROM Iventory i WHERE i.store.id = :storeId AND LOWER(i.product.name) LIKE LOWER(CONCAT('%', :pname, '%'))")
+    @Query("SELECT i.product FROM Inventory i WHERE i.store.id = :storeId AND LOWER(i.product.name) LIKE LOWER(CONCAT('%', :pname, '%'))")
     List<Product> findByNameLike(Long storeId, String pname);
-    @Query("SELECT i.product FROM Iventory i WHERE i.store.id = :storeId AND LOWER(i.product.name) LIKE LOWER(CONCAT('%', :pname, '%')) AND i.product.category = :category")
+    @Query("SELECT i.product FROM Inventory i WHERE i.store.id = :storeId AND LOWER(i.product.name) LIKE LOWER(CONCAT('%', :pname, '%')) AND i.product.category = :category")
     List<Product> findByNameAndCategory(Long storeId, String pname, String category);
-    @Query("SELECT i.product FROM Iventory i WHERE i.store.id = :storeId AND i.product.category = :category")
+    @Query("SELECT i.product FROM Inventory i WHERE i.store.id = :storeId AND i.product.category = :category")
     List<Product> findByCategoryAndStoreId(String category, Long storeId);
     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :pname, '%'))")
     List<Product> findProductBySubName(String pname);
-    @Query("SELECT i.product FROM Iventory i WHERE i.store.id = :storeId")
+    @Query("SELECT i.product FROM Inventory i WHERE i.store.id = :storeId")
     List<Product> findProductsByStoreId(Long storeId);
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     List<Product> findProductsByCategory(String category);

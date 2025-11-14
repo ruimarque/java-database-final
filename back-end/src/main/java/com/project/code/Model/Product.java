@@ -32,7 +32,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonManagedReference("inventory-product")
-    private List<Iventory> iventory;
+    private List<Inventory> inventory;
 
     public void setId(Long id) {
         this.id = id;
@@ -69,11 +69,11 @@ public class Product {
         return sku;
     }
 
-    public void setIventory(List<Iventory> iventory) {
-        this.iventory = iventory;
+    public void setInventory(List<Inventory> inventory) {
+        this.inventory = inventory;
     }
-    public List<Iventory> getIventory() {
-        return iventory;
+    public List<Inventory> getInventory() {
+        return inventory;
     }
 
     public Product() {}

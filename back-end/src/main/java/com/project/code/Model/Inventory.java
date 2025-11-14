@@ -56,7 +56,7 @@ public class Inventory {
 
     public Inventory() {}
 
-    public Iventory(Product product, Store store, Integer stockLevel) {
+    public Inventory(Product product, Store store, Integer stockLevel) {
         setProduct(product);
         setStore(store);
         setStockLevel(stockLevel);
