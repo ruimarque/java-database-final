@@ -12,7 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // simple enough that Spring Data JPA can automatically generate it based on method name
     public Customer findByEmail(String email);
 
-    public Customer findById(Long id);  
+    public Customer findByid(Long id);  
 }
 
 

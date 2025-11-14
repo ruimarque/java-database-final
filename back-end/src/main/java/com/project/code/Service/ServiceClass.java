@@ -7,14 +7,17 @@ import com.project.code.Repo.InventoryRepository;
 import com.project.code.Repo.ProductRepository;
 import com.project.code.Repo.StoreRepository;
 
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Service
 public class ServiceClass {
 
-    @AutoWired
+    @Autowired
     private InventoryRepository inventoryRepository;
-    @AutoWired
+    @Autowired
     private ProductRepository productRepository;
-    @AutoWired
+    @Autowired
     private StoreRepository storeRepository;
 
     public boolean validateInventory(Inventory inventory){
@@ -39,7 +42,7 @@ public class ServiceClass {
     }
 
     public boolean ValidateProductId(long id) {
-        Product result = productRepository.findById(id);
+        Product result = productRepository.findByid(id);
         if(result == null) {
             return false;
         }

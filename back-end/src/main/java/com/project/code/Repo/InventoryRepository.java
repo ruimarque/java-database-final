@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
