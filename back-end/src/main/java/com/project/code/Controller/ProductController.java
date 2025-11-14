@@ -1,6 +1,70 @@
 package com.project.code.Controller;
 
+import org.springframework.beans.factory.annotation.AutoWired;
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.project.code.Model.CombinedRequest;
+import com.project.code.Model.Inventory;
+import com.project.code.Model.Product;
+import com.project.code.Repo.InventoryRepository;
+import com.project.code.Repo.ProductRepository;
+import com.project.code.Service.ServiceClass;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+
+@RestController
+@RequestMapping("/product")
 public class ProductController {
+
+    @AutoWired
+    ProductRepository productRepository;
+    @AutoWired
+    InventoryRepository inventoryRepository;
+    @AutoWired
+    ServiceClass serviceClass;
+
+    @PostMapping
+    public Map<String, String> addProduct(@RequestBody Product product) {
+
+    }
+
+    @GetMapping("/product/{id}")
+    public Map<String, Object> getProductById(@PathVariable long id) {
+
+    }
+
+    @PutMapping
+    public Map<String, String> updateProduct(@RequestBody Product product) {
+
+    }
+
+    @GetMapping("/category/{name}/{category}")
+    public Map<String, Object> filterByCategoryProduct(@PathVariable String name, @PathVariable, String category) {
+
+    }
+
+    @GetMapping
+    public Map<String, Object> listProduct() {
+        
+    }
+
+    @GetMapping("filter/{category}/{storeid}")
+    public Map<String, Object> getProductByCategoryAndStoreId(@PathVariable String category, @PathVariable, String storeid) {
+
+    }
+
+    @DeleteMapping("/{id}")
+    public Map<String, String> deleteProduct(@PathVariable long id) {
+
+    }
+
+    @GetMapping("/searchProduct/{name}")
+    public Map<String, Object> searchProduct(@PathVariable String name  {
+        
+    }
+
 // 1. Set Up the Controller Class:
 //    - Annotate the class with `@RestController` to designate it as a REST controller for handling HTTP requests.
 //    - Map the class to the `/product` URL using `@RequestMapping("/product")`.
