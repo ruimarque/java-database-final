@@ -1,6 +1,88 @@
 package com.project.code.Controller;
 
+import org.springframework.beans.factory.annotation.AutoWired;
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.project.code.Model.CombinedRequest;
+import com.project.code.Model.Inventory;
+import com.project.code.Model.Product;
+import com.project.code.Repo.InventoryRepository;
+import com.project.code.Repo.ProductRepository;
+import com.project.code.Service.ServiceClass;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("/iventory")
 public class InventoryController {
+
+    @AutoWired
+    ProductRepository productRepository;
+    @AutoWired
+    InventoryRepository inventoryRepository;
+    @AutoWired
+    ServiceClass serviceClass;
+
+    @PutMapping
+    public Map<String, String> updateIventory(@RequestBody CombinedRequest request) {
+        Product product = request.getProduct();
+        Iventory iventory = request.getInventory();
+        Map<String, String> map = new HashMap<String, String>();
+        // Check if product id already exists
+        if(!serviceClass.ValidateProductId(product.getId())) {
+            map.put("message", "Product doesn't exist in the database");
+            return map;
+        }
+        productRepository.save(product);
+        map.put("message", "Updated product");
+
+        if(iventory != null) {
+            try {
+                Iventory checkIventory = serviceClass.getInventoryId(iventory);
+                // iventory exists for that product and is going to be updated
+                if(checkIventory != null) {
+                    iventory.setId(checkIventory.getId();
+                    inventoryRepository.save(iventory);
+                }
+                else {
+                    map.put(message, "No data available");
+                    return map;
+                }
+            } catch (DataIntegrityViolationException dive) {
+                map.put(message, "Error: " + dive);
+                return map;
+            } catch (Exception e) {
+                map.put(message, "Error: " + e);
+                return map;
+            }
+        }
+        return map;
+    }
+
+    @PostMapping
+    public Map<String, String> saveIventory(@RequestBody Iventory iventory) {
+        Map<String, String> map = new HashMap<String, String>();
+        try {
+            if(serviceClass.validateInventory(iventory)) {
+                // iventory entry does not exist
+                inventoryRepository.save(iventory);
+            }
+            else {
+                map.put(message, "Iventory entry already exists");
+                return map;
+            }   
+        } catch (DataIntegrityViolationException dive) {
+            map.put(message, "Error: " + dive);
+            return map;
+        } catch (Exception e) {
+            map.put(message, "Error: " + e);
+            return map;
+        }  
+        map.put(message, "Iventory entry was added successfully");
+        return map;    
+    }
+
+
 // 1. Set Up the Controller Class:
 //    - Annotate the class with `@RestController` to indicate that this is a REST controller, which handles HTTP requests and responses.
 //    - Use `@RequestMapping("/inventory")` to set the base URL path for all methods in this controller. All endpoints related to inventory will be prefixed with `/inventory`.
