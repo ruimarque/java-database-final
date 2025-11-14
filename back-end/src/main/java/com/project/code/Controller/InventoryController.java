@@ -11,6 +11,8 @@ import com.project.code.Repo.ProductRepository;
 import com.project.code.Service.ServiceClass;
 
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/iventory")
@@ -81,6 +83,66 @@ public class InventoryController {
         map.put(message, "Iventory entry was added successfully");
         return map;    
     }
+
+    @GetMapping("/{storeId}")
+    public Map<String, Object> getAllProducts(@PathVariable long storeId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Product> products = productRepository.findProductsByStoreId(storeId);
+        map.put("products", products);
+        return map;
+    }
+
+    @GetMapping("filter/{category}/{name}/{storeid}")
+    public Map<String, Object> getProductName(@PathVariable String category, @PathVariable String name, @PathVariable long storeid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Product> products;
+        if(category.equals("null")) {
+            // filter by name in store with storeId
+            products = productRepository.findByNameLike(storeid, name);
+            map.put("product", products);
+            return map;
+        }
+        else if(name.equals("null")) {
+            // filter by category in store with storeId
+            products = productRepository.findByCategoryAndStoreId(category, storeid);
+            map.put("product", products);
+            return map;
+        }
+        products = productRepository.findByNameAndCategory(storeid, name, category);
+        map.put("product", products);
+        return map;
+    }
+
+    @GetMapping("search/{name}/{storeid}")
+    public Map<String, Object> searchProduct(@PathVariable String name, @PathVariable long storeid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Product> products = productRepository.findByNameLike(storeid, name);
+        map.put("product", products);
+        return map;
+    }
+
+    @DeleteMapping("/{id}")
+    public Map<String, String> removeProduct(@PathVariable long id) {
+        Map<String, String> map = new HashMap<String, String>();
+        if(!serviceClass.ValidateProductId(id)) {
+            map.put("message", "Product with that ID not present in database");
+            return map;
+        }
+        inventoryRepository.deleteByProductId(id);
+        map.put("message", "Product with that ID was successfully removed");
+        return map;
+    }
+
+    @GetMapping("validate/{quantity}/{storeId}/{productId}")
+    public boolean validateQuantity(@PathVariable int quantity, @PathVariable long storeId, @PathVariable long productId) {
+        int quantityInStore = inventoryRepository.findByProductIdandStoreId(productId, storeId).getStockLevel();
+        if(quantityInStore >= quantity) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 // 1. Set Up the Controller Class:
