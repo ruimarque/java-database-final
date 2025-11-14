@@ -1,9 +1,28 @@
 package com.project.code.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-import jakarta.persistence.*;
-import jakarta.validation.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.Valid;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.util.List;
 
 @Entity
 @Table(name = "product", uniqueConstraints = @UniqueConstraint(columnNames = "sku"))
@@ -23,7 +42,7 @@ public class Product {
     private String category;
 
     @NotNull(message = "Price cannot be null")
-    @Min(value = 0.01, message = "Price has to be greater than 0")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private Double price;
 
     @NotNull(message = "Sku cannot be null")
@@ -55,7 +74,7 @@ public class Product {
         return category;
     }
 
-    public void setCategory(Double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     public Double getPrice() {

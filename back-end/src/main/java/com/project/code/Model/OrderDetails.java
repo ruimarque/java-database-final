@@ -1,9 +1,26 @@
 package com.project.code.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-import jakarta.validation.*;
-import jakarta.persistance.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.Valid;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,9 +33,9 @@ public class OrderDetails {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "costumer_id")
+    @JoinColumn(name = "customer_id")
     @JsonManagedReference
-    private Costumer costumer;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
@@ -27,7 +44,7 @@ public class OrderDetails {
 
     @Valid
     @NotNull(message = "Order price cannot be null")
-    @Min(value = 0.01, message = "Order price has to br greater than zero")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Order price must be greater than 0")
     private Double totalPrice;
 
     @NotNull(message = "Date and time cannot be null")
@@ -45,11 +62,11 @@ public class OrderDetails {
         return id;
     }
 
-    public void setCostumer(Costumer costumer) {
-        this.costumer = costumer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
-    public Costumer getCostumer() {
-        return costumer;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public void setStore(Store store) {
@@ -82,8 +99,8 @@ public class OrderDetails {
 
     public OrderDetails() {}
 
-    public OrderDetails(Costumer costumer, Store store, Double totalPrice, LocalDateTime date) {
-        setCostumer(costumer);
+    public OrderDetails(Customer customer, Store store, Double totalPrice, LocalDateTime date) {
+        setCustomer(customer);
         setStore(store);
         setTotalPrice(totalPrice);
         setDate(date);
