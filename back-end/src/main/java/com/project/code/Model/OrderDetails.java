@@ -48,7 +48,7 @@ public class OrderDetails {
     private Double totalPrice;
 
     @NotNull(message = "Date and time cannot be null")
-    @NotBlank(message = "Date and time cannot be empty")
+    //@NotBlank(message = "Date and time cannot be empty")
     private LocalDateTime date;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
