@@ -37,7 +37,7 @@ public class ProductController {
     public Map<String, String> addProduct(@RequestBody Product product) {
         Map<String, String> map = new HashMap<>();
         // Check if product is already in the database
-        if(serviceClass.ValidateProductId(product.getId())) {
+        if(!serviceClass.validateProduct(product)) {
             map.put("message", "Product is already registered on the database");
             return map;
         }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.code.Model.CombinedRequest;
 import com.project.code.Model.Inventory;
 import com.project.code.Model.Product;
+import com.project.code.Model.Store;
 import com.project.code.Repo.InventoryRepository;
 import com.project.code.Repo.ProductRepository;
+import com.project.code.Repo.StoreRepository;
 import com.project.code.Service.ServiceClass;
 
 import java.util.Map;
@@ -30,6 +32,8 @@ public class InventoryController {
     ProductRepository productRepository;
     @Autowired
     InventoryRepository inventoryRepository;
+    @Autowired
+    StoreRepository storeRepository;
     @Autowired
     ServiceClass serviceClass;
 
@@ -95,6 +99,11 @@ public class InventoryController {
     @GetMapping("/{storeId}")
     public Map<String, Object> getAllProducts(@PathVariable long storeId) {
         Map<String, Object> map = new HashMap<>();
+        /*Store store = storeRepository.findByid(storeId);
+        if(store == null) {
+            map.put("products", null);    
+            return map;
+        }*/
         List<Product> products = productRepository.findProductsByStoreId(storeId);
         map.put("products", products);
         return map;
