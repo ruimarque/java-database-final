@@ -14,13 +14,13 @@ import java.util.List;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
-    @Query("SELECT i FROM Inventory i WHERE i.product_id = :productId AND i.store_id = :storeId")
+    @Query("SELECT i FROM Inventory i WHERE i.product.id = :productId AND i.store.id = :storeId")
     public Inventory findByProductIdandStoreId(Long productId, Long storeId);
 
     public List<Inventory> findByStore_Id(Long storeId);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Inventory i WHERE i.product_id = :productId")
+    @Query("DELETE FROM Inventory i WHERE i.product.id = :productId")
     public void deleteByProductId(Long productId);
 }
