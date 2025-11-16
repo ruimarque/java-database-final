@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Column;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -30,26 +31,26 @@ public class OrderDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // unique id for the order
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonManagedReference
-    private Customer customer;
+    private Customer customer; // references the customer who placed the order via its id
 
     @ManyToOne
     @JoinColumn(name = "store_id")
     @JsonManagedReference
-    private Store store;
+    private Store store; // references the store at which the order was made via its id
 
     @Valid
     @NotNull(message = "Order price cannot be null")
     @DecimalMin(value = "0.0", inclusive = false, message = "Order price must be greater than 0")
-    private Double totalPrice;
+    private Double totalPrice; // total price of the order
 
     @NotNull(message = "Date and time cannot be null")
-    //@NotBlank(message = "Date and time cannot be empty")
-    private LocalDateTime date;
+    @Column(name = "date")
+    private LocalDateTime date; // timestamp at which the order was made
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @JsonManagedReference

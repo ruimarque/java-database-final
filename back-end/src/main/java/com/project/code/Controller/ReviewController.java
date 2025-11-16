@@ -37,9 +37,9 @@ public class ReviewController {
     CustomerRepository customerRepository;
 
     @GetMapping("/{storeId}/{productId}")
-    public Map<String, Object> getReviews(@PathVariable long storeid, @PathVariable long productid) {
+    public Map<String, Object> getReviews(@PathVariable long storeId, @PathVariable long productId) {
         Map<String, Object> map = new HashMap<>();
-        List<Review> reviews = reviewRepository.findByStoreIdAndProductId(storeid, productid);
+        List<Review> reviews = reviewRepository.findByStoreIdAndProductId(storeId, productId);
         List<Map<String, Object>> reviewsWithCustomerNames = new ArrayList<>();
         for(Review review : reviews) {
             Map<String, Object> reviewMap = new HashMap<>();

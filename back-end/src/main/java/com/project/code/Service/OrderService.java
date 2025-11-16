@@ -16,6 +16,8 @@ import com.project.code.Repo.StoreRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.dao.DataIntegrityViolationException;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,7 +43,7 @@ public class OrderService {
         // placeOrderRequest holds all the relevant data
         
         // 1. Retrieve or create the customer
-        Customer existingCustomer = customerRepository.findByEmail(placeOrderRequest.getCustomerEmail());
+        /*Customer existingCustomer = customerRepository.findByEmail(placeOrderRequest.getCustomerEmail());
         Customer customer = new Customer();
         customer.setName(placeOrderRequest.getCustomerName());
         customer.setEmail(placeOrderRequest.getCustomerEmail());
@@ -52,15 +54,21 @@ public class OrderService {
         }
         else {
             customer = existingCustomer;
+        }*/
+
+        Customer customer = customerRepository.findByEmail(placeOrderRequest.getCustomerEmail());
+        if(customer == null) {
+            customer = new Customer(placeOrderRequest.getCustomerName(), placeOrderRequest.getCustomerEmail(), placeOrderRequest.getCustomerPhone());
+            try {
+                customer = customerRepository.save(customer);
+            } catch (DataIntegrityViolationException dive) {
+                System.out.println("Error: " + dive);
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
         }
 
         // 2. Retrieve the store
-        // if it breaks compile replace this
-        //Store existingStore = storeRepository.findByid(placeOrderRequest.getStoreId());
-        //if(existingStore == null) {
-        //    throw new RuntimeException("Store not found");
-        //}
-        // with this
         Store existingStore = storeRepository.findById(placeOrderRequest.getStoreId()).orElseThrow(() -> new RuntimeException("Store not found"));
 
         // 3. Create OrderDetails and save it to database

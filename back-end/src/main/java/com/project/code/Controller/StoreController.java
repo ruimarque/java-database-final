@@ -61,12 +61,7 @@ public class StoreController {
 
     @GetMapping("validate/{storeId}")
     public boolean validateStore(@PathVariable long storeId) {
-        Store store = storeRepository.findByid(storeId);
-        if(store == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return storeRepository.findByid(storeId) != null;
     }
 
     @PostMapping("/placeOrder")
@@ -74,7 +69,7 @@ public class StoreController {
         Map<String, String> map = new HashMap<>();
         try {
             orderService.saveOrder(order);
-            map.put("null", "Order placed successfully");
+            map.put("message", "Order placed successfully");
         } catch (DataIntegrityViolationException dive) {
             map.put("message", "Error: " + dive);
         } catch (Exception e) {
