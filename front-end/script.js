@@ -1,4 +1,4 @@
-const apiURL = 'https://ruimarque96-8080.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai';
+const apiURL = 'http://localhost:8080';
 let students = [];
 let Ordercount = 1;
 let deleteRow = [];
