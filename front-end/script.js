@@ -95,7 +95,7 @@ function calculateTotal() {
         totalField = document.getElementById(`orderTotal${i}`);
         if (totalField) {
             if (totalField.value)
-                total = total + parseInt(totalField.value)
+                total = total + parseFloat(totalField.value)
         }
 
     }
@@ -184,7 +184,7 @@ function calculatePrice(count) {
     price = document.getElementById(`orderProductPrice${count}`).value;
     quantity = document.getElementById(`orderProductQuantity${count}`).value;
     total = document.getElementById(`orderTotal${count}`);
-    total.value = (price * quantity);
+    total.value = Math.trunc(price * quantity*100)/100;
     calculateTotal();
 }
 
